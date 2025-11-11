@@ -106,9 +106,15 @@ class MemberDeleteView(TitulorRequiredMixin, DeleteView):
     context_object_name = 'member'
     success_url = reverse_lazy('list_members')
 
-    # Vérifie que l'utilisateur connecté est bien titulaire
-    def test_func(self):
-        return self.request.user.memberStatus == 'titulor'    
+    def delete(self, request, *args, **kwargs):
+        member = self.get_object()
+
+        # Vérifie si le titulaire essaie de se supprimer lui-même
+        if member == request.user:
+            #Si c'est le cas on le renvoi dans la liste des membres
+            return redirect('list_members')
+
+        return super().delete(request, *args, **kwargs)
 
 
 class MemberListView(LoginRequiredHomeMixin, ListView):
