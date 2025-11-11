@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}Mes tâches - Colloc Manager{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+    <!-- 🔹 Barre d’actions -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <h2 class="fw-bold text-primary">Mes tâches que je suis sensé executer conformement à la description de la tâche</h2>
+
+        <div class="d-flex gap-2 flex-wrap">
+            {% if request.user.memberStatus == 'titulor' %}
+                <a href="{% url 'task_create' %}" class="btn btn-gradient-primary rounded-pill px-4 py-2">
+                    <i class="bi bi-plus-circle me-2"></i>Créer une tâche
+                </a>
+            {% endif %}
+            <a href="{% url 'task_execution' %}" class="btn btn-outline-primary rounded-pill px-4 py-2">
+                <i class="bi bi-list-check me-2"></i>Voir les exécutions
+            </a>
+            <a href="{% url 'my_taks' %}" class="btn btn-outline-success rounded-pill px-4 py-2">
+                <i class="bi bi-person-check me-2"></i>Mes tâches
+            </a>
+        </div>
+    </div>
+
+    {% if executions %}
+        <div class="row g-4">
+            {% for exec in executions %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card shadow-lg rounded-4 p-4 task-card">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="fw-bold">{{ exec.roomTask.taskName }}</h5>
+                            <span class="badge {% if exec.isDone %}bg-success{% else %}bg-warning{% endif %}">
+                                {% if exec.isDone %}Terminée{% else %}En cours{% endif %}
+                            </span>
+                        </div>
+
+                        <p class="text-muted mb-3">{{ exec.roomTask.taskDescription|truncatechars:80 }}</p>
+
+                        <div class="row mb-3">
+                            <div class="col-6"><strong>Chambre :</strong> {{ exec.roomTask.room.roomNumber }}</div>
+                            <div class="col-6"><strong>Durée :</strong> {{ exec.roomTask.durationDays }} jour(s)</div>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'task_detail' exec.roomTask.pk %}" class="btn btn-sm btn-outline-primary me-2">
+                                Voir détails
+                            </a>
+                            {% if not exec.isDone %}
+                                <form method="post" action="{% url 'mark_task_done' exec.pk %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-outline-success me-2">
+                                        Marquer terminée
+                                    </button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center mt-5">
+            Vous n’avez actuellement aucune tâche assignée.
+        </div>
+    {% endif %}
+</div>
+
+<style>
+.task-card {
+    background: #fff;
+    transition: all 0.3s ease;
+    padding: 25px;
+}
+.task-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+.badge {
+    font-size: 0.9rem;
+    padding: 0.4em 0.8em;
+    border-radius: 20px;
+}
+.btn-outline-primary:hover { background-color: #e3f2ff; }
+.btn-outline-success:hover { background-color: #d4edda; }
+.btn-outline-warning:hover { background-color: #fff3cd; }
+.btn-gradient-primary {
+    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+    color: #fff;
+}
+.btn-gradient-primary:hover {
+    filter: brightness(1.1);
+}
+</style>
+{% endblock %}

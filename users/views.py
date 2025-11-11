@@ -1,0 +1,149 @@
+from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DetailView, DeleteView, ListView,UpdateView
+from users.models import RoomMember
+from users.forms import RoomTitulorCreationForm,SimpleMemberCreationForm,ProfileUpdateForm
+from django.contrib.auth.views import LoginView, LogoutView,PasswordChangeView
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
+# Create your views here.
+
+## Vu pour la page d'accueil
+def home(request):
+    return render(request,'home.html')
+
+
+
+###### Les vus pour la verification des status de la personne et autre
+class LoginRequiredHomeMixin(LoginRequiredMixin):
+    login_url = 'login'
+
+class TitulorRequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_authenticated and \
+               self.request.user.memberStatus == self.request.user.MemberStatus.TITULOR
+
+    def handle_no_permission(self):
+        # Redirige si pas de permission hum on va personnaliser ca par apres
+        return redirect('home')
+    
+class SimpleMemberRequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_authenticated and \
+               self.request.user.memberStatus == self.request.user.MemberStatus.SIMPLE_MEMBER
+
+    def handle_no_permission(self):
+        return redirect('home')
+    
+    
+#### Les vu pour la creations des membres de la room titulor et simple members 
+class CreateTitulor(CreateView):
+    model = RoomMember
+    form_class = RoomTitulorCreationForm
+    template_name = 'users/create_titulor.html'
+    success_url = reverse_lazy('list_members')
+
+
+class CreateSimpleMemberView(TitulorRequiredMixin, CreateView):
+    model = RoomMember
+    form_class = SimpleMemberCreationForm
+    template_name = 'users/create_simple_member.html'
+    success_url = reverse_lazy('list_members')
+
+    def dispatch(self, request, *args, **kwargs):
+        # Vérifie si la room du titulor est vérifiée
+        if not request.user.room or request.user.room.roomStatus != 'verified':
+            return redirect('room_not_verified')
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        # Associe le membre à la chambre du titulor
+        room = self.request.user.room
+        member = form.save(room=room)
+        self.object = member
+
+        return redirect(self.get_success_url())
+    
+def room_not_verified(request):
+    return render(request,'users/room_not_verified.html')
+
+################################## Vu pour permettre a l'utilisateur la gestion de son profil ##########
+class ProfileDetailView(LoginRequiredHomeMixin, DetailView):
+    model = RoomMember
+    template_name = 'users/profile_detail.html'
+    context_object_name = 'user_profile'
+
+    def get_object(self):
+        # Toujours retourner l'utilisateur connecté
+        return self.request.user
+
+
+# Modifier le profil
+class ProfileUpdateView(LoginRequiredHomeMixin, UpdateView):
+    model = RoomMember
+    form_class = ProfileUpdateForm
+    template_name = 'users/profile_update.html'
+    success_url = reverse_lazy('profile_detail')
+
+    def get_object(self):
+        return self.request.user
+
+class UserPasswordChangeView(LoginRequiredHomeMixin, PasswordChangeView):
+    template_name = 'users/change_password.html'
+    success_url = reverse_lazy('profile_detail')
+
+
+##### Vu pour le RUD des membres de la home
+class MemberDetaiView(LoginRequiredHomeMixin, DetailView):
+    model = RoomMember
+    template_name = 'users/detail_member.html'
+    context_object_name = 'member'
+
+class MemberDeleteView(TitulorRequiredMixin, DeleteView):
+    model = RoomMember
+    template_name = 'users/member_confirm_delete.html'
+    context_object_name = 'member'
+    success_url = reverse_lazy('list_members')
+
+    # Vérifie que l'utilisateur connecté est bien titulaire
+    def test_func(self):
+        return self.request.user.memberStatus == 'titulor'    
+
+
+class MemberListView(LoginRequiredHomeMixin, ListView):
+    model = RoomMember
+    template_name = 'users/list_members.html'
+    context_object_name = 'members'
+
+    def get_queryset(self):
+        user = self.request.user
+        if hasattr(user, 'room'):
+            return RoomMember.objects.filter(room=user.room)
+        return RoomMember.objects.none()
+
+
+
+
+
+##### Maintenant Gerons les connexions et autres
+class CustomLoginView(LoginView):
+    template_name = 'users/login.html'
+    redirect_authenticated_user = True
+
+    def get_success_url(self):
+        user = self.request.user
+        if user.memberStatus == user.MemberStatus.TITULOR:
+            return reverse_lazy('list_members')
+        else:
+            return reverse_lazy('list_members')
+
+class CustomLogoutView(LoginRequiredHomeMixin, LogoutView):
+    next_page = 'login'
+
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+
+def help(request):
+    return render(request,'users/help.html')

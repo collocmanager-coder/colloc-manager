@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% block title %}Fonctionnement - Colloc Manager{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold text-primary display-5">⚙️ Comment fonctionne Colloc Manager</h1>
+        <p class="text-muted lead">Comprends le concept et la logique de ton outil de gestion de colocation.</p>
+    </div>
+
+   
+
+    <!-- Section principale -->
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card shadow-lg border-0 rounded-4 p-4 h-100">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="icon-circle bg-primary text-white me-3">
+                        <i class="bi bi-house-door-fill fs-4"></i>
+                    </div>
+                    <h4 class="fw-bold mb-0 text-primary">Création d'une Room</h4>
+                </div>
+                <p class="text-muted">
+                    Au tout début, <strong>seul le titulaire</strong> peut créer une <em>room</em> (colocation).  
+                    Il y ajoute les membres de sa maison.  
+                    Pour chaque nouveau membre, un <strong>nom d’utilisateur et un mot de passe</strong> sont automatiquement générés et envoyés par mail pour lui permettre de se connecter à son compte personnel.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card shadow-lg border-0 rounded-4 p-4 h-100">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="icon-circle bg-success text-white me-3">
+                        <i class="bi bi-clipboard-check-fill fs-4"></i>
+                    </div>
+                    <h4 class="fw-bold mb-0 text-success">Création des Tâches</h4>
+                </div>
+                <p class="text-muted">
+                    Le titulaire peut ensuite <strong>ajouter des tâches</strong> à effectuer dans la maison (ex : nettoyer la cuisine, sortir les poubelles…).  
+                    Lors de la création d’une tâche, il définit <strong>l’ordre d’exécution</strong> des membres.  
+                    Ainsi, le système sait toujours <em>qui est le prochain à faire la tâche</em>.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card shadow-lg border-0 rounded-4 p-4 h-100">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="icon-circle bg-warning text-white me-3">
+                        <i class="bi bi-envelope-fill fs-4"></i>
+                    </div>
+                    <h4 class="fw-bold mb-0 text-warning">Notifications automatiques</h4>
+                </div>
+                <p class="text-muted">
+                    Lorsqu’une tâche est créée, le <strong>premier membre concerné</strong> reçoit un mail l’invitant à effectuer la tâche.  
+                    Une fois qu’il l’a terminée et qu’il clique sur <strong>“Marquer terminée”</strong>, la personne suivante reçoit à son tour un mail lui indiquant que c’est son tour d’agir.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card shadow-lg border-0 rounded-4 p-4 h-100">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="icon-circle bg-info text-white me-3">
+                        <i class="bi bi-arrow-repeat fs-4"></i>
+                    </div>
+                    <h4 class="fw-bold mb-0 text-info">Rotation automatique</h4>
+                </div>
+                <p class="text-muted">
+                    Le système gère automatiquement la <strong>rotation</strong> entre les membres.  
+                    Une fois que quelqu’un termine sa tâche, le prochain dans la liste devient responsable.  
+                    Cette rotation continue automatiquement sans intervention du titulaire.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card shadow-lg border-0 rounded-4 p-4 h-100">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="icon-circle bg-danger text-white me-3">
+                        <i class="bi bi-trash3-fill fs-4"></i>
+                    </div>
+                    <h4 class="fw-bold mb-0 text-danger">Suppression transparente</h4>
+                </div>
+                <p class="text-muted">
+                    Si le titulaire décide de <strong>supprimer une tâche</strong>, tous les membres de la room reçoivent immédiatement un mail.  
+                    Cette transparence garantit que <strong>personne ne soit surpris</strong> par une suppression et que tout reste clair dans la colocation.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card shadow-lg border-0 rounded-4 p-4 h-100">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="icon-circle bg-secondary text-white me-3">
+                        <i class="bi bi-shield-check fs-4"></i>
+                    </div>
+                    <h4 class="fw-bold mb-0 text-secondary">Objectif de l’application</h4>
+                </div>
+                <p class="text-muted">
+                    L’objectif de Colloc Manager est simple :  
+                    <strong>gérer les tâches de maison de manière juste, organisée et totalement transparente.</strong>  
+                    Plus de malentendus, plus d’oublis — tout est automatisé et visible par tout le monde.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section finale -->
+    <div class="text-center mt-5">
+        <h4 class="fw-bold text-primary">💡 En résumé</h4>
+        <p class="text-muted lead">
+            <strong>Colloc Manager</strong> automatise la répartition, la communication et le suivi des tâches dans une colocation.  
+            Tout est clair, fluide et collaboratif.
+        </p>
+    </div>
+</div>
+
+<style>
+.icon-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-gradient-primary {
+    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+    color: #fff;
+    border: none;
+}
+.btn-gradient-primary:hover {
+    filter: brightness(1.1);
+}
+.card {
+    transition: all 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+</style>
+{% endblock %}

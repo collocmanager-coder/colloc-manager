@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Colloc Manager{% endblock %}</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+
+    <!-- ======= NAVBAR ======= -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3 sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="{% url 'home' %}">
+                <i class="bi bi-house-door-fill me-2"></i>Colloc Manager
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link link-hover" href="{% url 'home' %}">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link link-hover" href="{% url 'help' %}">Aide</a>
+                    </li>
+                    {% if request.user.is_authenticated %}
+        
+                        <li class="nav-item">
+                            <a class="nav-link link-hover" href="{% url 'task_list' %}">Tâches</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-hover" href="{% url 'list_members' %}">Membres</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-hover" href="{% url 'profile_detail' %}">Profil</a>
+                        </li>
+                        <form class="nav-item ms-lg-3" method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="nav-link logout-link px-3 py-1 rounded-3 text-danger fw-semibold">
+                                <i class="bi bi-box-arrow-right me-1"></i> Déconnexion
+                            </button>
+                        </form>
+                    {% else %}
+                        <li class="nav-item ms-lg-3">
+                            <a class="nav-link login-link px-3 py-1 rounded-3 text-white fw-semibold bg-primary" href="{% url 'login' %}">
+                                <i class="bi bi-person-circle me-1"></i>Connexion
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ======= CONTENU PRINCIPAL ======= -->
+    <main class="flex-grow-1">
+        <div class="container py-5">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+
+    <!-- ======= FOOTER ======= -->
+    <footer class="bg-white text-center text-muted py-3 border-top mt-auto">
+        <small>&copy; 2025 <span class="text-primary fw-semibold">Colloc Manager</span> — Tous droits réservés.</small>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    {% block scripts %}
+    {% endblock %}
+
+    <!-- ======= STYLES GLOBAUX ======= -->
+    <style>
+        .navbar {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .nav-link {
+            color: #333 !important;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #4a90e2 !important;
+        }
+
+        /* Soulignement fluide au survol */
+        .link-hover::after {
+            content: "";
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            left: 0;
+            bottom: -2px;
+            background-color: #4a90e2;
+            transition: width 0.3s ease-in-out;
+        }
+
+        .link-hover:hover::after {
+            width: 100%;
+        }
+
+        /* Bouton Connexion */
+        .login-link {
+            background-color: #4a90e2;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-link:hover {
+            background-color: #357ABD;
+        }
+
+        /* Bouton Déconnexion */
+        .logout-link {
+            background-color: transparent;
+            border: 1px solid #dc3545;
+            transition: all 0.3s ease;
+        }
+
+        .logout-link:hover {
+            background-color: #dc3545;
+            color: white !important;
+        }
+    </style>
+</body>
+</html>

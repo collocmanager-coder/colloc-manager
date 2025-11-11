@@ -1,0 +1,57 @@
+Yo l'objectif de cette appli est de permettre une meilleure organistaion
+enfaite. Pour que chacun fasse ses taches et tout. des qu'il fait sa tache,
+il l'a marque comme faite et puis l'algorithme attribue la tache a la personne
+qui suit.
+
+En gros l'admin cree sa room, y met tous ses membres puis il y met les taches de la
+maison et le nombre de jours que la tache doit etre faite par chaque personne
+    Puis l'algorithme en fonction de l'ordre d'ajout des membres de la room et des 
+    taches a faire gere les tours et autres. genre a chaque fois que quelqu'un veut 
+    savoir si c'est son tour ou pas il regarde dans l'appli et si c'est son tour pour
+    la tache donne il la fait puis il la marque comme faite et l'algorithme passe au suivant
+
+    Un truc un peu dingue oui je sais mais bon ca vaut le coup qu'on le fasse
+
+Donc le locataire titulaire creera un compte sur l'appli puis il :
+    Ajoutera les membres de sa room
+    Ajoutera les taches qui ont besoin d'etre faite et leur delai de faisation
+        Des qu'un membre est cree avec son adresse mail une notification lui sera
+            envoye par mail lui disant que son compte colloc est cree et qu'il doit se
+            connecter et changer ses identifiants si il veut avec un mot de pass deja fait
+            biensur
+Le membre de la room lui pourra :
+    Se connecter sur l'appli puis verra en temps reel:
+        Les taches qu'il doit accomplir pour la journee et leur delai de faisation
+            si la tache doit etre faite tous les jours pendant 2 jours le user devra le faire
+            si la tache doit etre faite une fois dans 2 jour le user devra le faire et marquer 
+            fait dans tous les cas enfaite.......
+        Le locataire titulaire est aussi un membre de la house il doit donc aussi faire des taches
+
+Enfin tous les membres lorsqu'ils se connectent sur l'appli ils ont la possibilite de voir qui doit
+faire tel ou tel tache aujourd'hui et voir si la tache est faite par la personne ou non...
+
+L'appli doit aussi envoyer par mail a l'utilisateur qui doit effectuer la tache du jour.. 
+    Bref j'espere que je serai en mesure de faire ce truc.. souhaitez moi bonne chance les gars
+
+Lors de la creation d'une room on est oblige de mettre ses identifiants et moi je vais verifier tous ca
+si j'approuve, la maison pourra etre gere maintenant
+
+
+########################### Fonctionnement de l'appli####################
+Au tout debut seul le titulaire peut creer un room et y ajouter des membres
+puis ajouter des taches et y mettre l'ordre d'execution des taches okay?
+
+Pour un debut lorsque le user cree la room il va ajouter des membres et un usersname
+et un password sera directement cree et envoyer par mail au user lui invitant a se connecter
+a son compte
+
+Puis lorsque le titulaire ajoute une tache la premiere personne conserne recevra un mail lui informant
+que la tache a ete faite et que c'est son tour lui invitant a faire la tache et lorsqu'il aura fini la marque 
+comme termine pour que la personne suivante puisse recevoir le mail et faire la tache a son tour
+
+C'est pareil pour toutes les autres taches enfaite...... 
+
+Lorsqu'une tache est supprime par le titulor les autres membres recevront directement un mail les disant
+que le titulors de leur house a supprime la taches pour garentir une transparence absolue
+
+l'objectif de l'appli et de gerer de facon transparente tout les trucs de la house

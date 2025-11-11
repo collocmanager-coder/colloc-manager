@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Tâche non terminée{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="alert alert-warning text-center">
+        ⏳ La tâche "{{ execution.roomTask.taskName }}" n'est pas encore terminable.
+        <br>
+        Date de fin prévue : {{ deadline|date:"d/m/Y H:i" }}
+    </div>
+    <div class="text-center mt-4">
+        <a href="{% url 'my_taks' %}" class="btn btn-primary">Retour à mes tâches</a>
+    </div>
+</div>
+{% endblock %}

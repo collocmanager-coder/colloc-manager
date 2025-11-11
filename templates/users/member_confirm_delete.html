@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Supprimer {{ member.username }} - Colloc Manager{% endblock %}
+
+{% block content %}
+<div class="container py-5 d-flex justify-content-center">
+    <div class="card shadow-lg border-0 rounded-4 text-center p-5" style="max-width: 500px;">
+        <div class="mb-4">
+            <i class="bi bi-exclamation-triangle-fill text-warning" style="font-size: 3rem;"></i>
+        </div>
+        <h3 class="fw-bold mb-3">Êtes-vous sûr ?</h3>
+        <p class="text-muted mb-4">
+            Vous êtes sur le point de supprimer le membre <strong>{{ member.first_name }} {{ member.last_name }}</strong>.
+            Cette action est <span class="fw-bold text-danger">irréversible</span>.
+        </p>
+
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger rounded-pill px-4 py-2 shadow-sm">
+                    <i class="bi bi-trash3 me-2"></i>Supprimer
+                </button>
+            </form>
+            <a href="{% url 'list_members' %}" class="btn btn-light rounded-pill px-4 py-2 shadow-sm border">
+                <i class="bi bi-x-lg me-2"></i>Annuler
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f9fafc;
+    }
+    .card {
+        transition: all 0.3s ease;
+        background-color: #fff;
+    }
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    }
+    .btn-light:hover {
+        background-color: #f1f3f7;
+    }
+    .btn-danger:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(239, 68, 68, 0.3);
+    }
+</style>
+{% endblock %}

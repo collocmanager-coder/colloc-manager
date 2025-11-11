@@ -1,0 +1,69 @@
+# === PYTHON BASICS ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.so
+
+# === DJANGO SPECIFIC ===
+*.log
+*.pot
+*.pyc
+db.sqlite3
+media/
+staticfiles/
+.env
+.env.*
+*.env
+
+# === MIGRATIONS ===
+*/migrations/__pycache__/
+*/migrations/*.py
+
+# === VIRTUAL ENVIRONMENTS ===
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# === IDEs & EDITORS ===
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# === OS FILES ===
+.DS_Store
+Thumbs.db
+
+# === TEST & CACHE FILES ===
+.coverage
+htmlcov/
+.tox/
+.pytest_cache/
+.cache/
+
+# === BUILD FILES ===
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# === JUPYTER / NOTEBOOKS ===
+.ipynb_checkpoints/
+
+# === GIT / SECURITY ===
+*.secret
+*.key
+*.pem
+*.crt
+
+# === FRONTEND (if you have JS/CSS build) ===
+node_modules/
+package-lock.json
+npm-debug.log
+yarn-debug.log
+yarn-error.log

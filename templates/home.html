@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block title %}Accueil - Colloc Manager{% endblock %}
+
+{% block content %}
+<div class="bg-light min-vh-100">
+
+    <!-- Hero Section -->
+    <section class="py-5">
+        <div class="container d-flex flex-column flex-lg-row align-items-center justify-content-between">
+            
+            <!-- Texte principal -->
+            <div class="col-lg-6 text-center text-lg-start mb-5 mb-lg-0">
+                <h1 class="fw-bold display-4 text-dark mb-3">
+                    Simplifiez la vie en <span class="text-primary">collocation</span>
+                </h1>
+                <p class="text-muted fs-5 mb-4">
+                    Colloc Manager vous aide à organiser les tâches, répartir les rôles et garder une harmonie parfaite à la maison.
+                </p>
+                <a href="{% url 'create_titulor' %}" class="btn btn-primary btn-lg px-4 shadow-sm">Commencer maintenant</a>
+            </div>
+
+            <!-- Illustration -->
+            <div class="col-lg-5 text-center">
+                <img src="https://cdn-icons-png.flaticon.com/512/3311/3311576.png" alt="Colloc Illustration" class="img-fluid" style="max-width: 350px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- Comment ça marche -->
+    <section class="py-5 bg-white">
+        <div class="container">
+            <h2 class="text-center fw-bold mb-5 text-dark">Comment ça marche ?</h2>
+            <div class="row g-4 text-center">
+                <div class="col-md-4">
+                    <div class="p-4 border rounded-4 bg-light hover-shadow">
+                        <i class="bi bi-house-door fs-1 text-primary mb-3"></i>
+                        <h5 class="fw-semibold">Créez votre maison</h5>
+                        <p class="text-muted">Ajoutez les membres et définissez les règles de la maison.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-4 border rounded-4 bg-light hover-shadow">
+                        <i class="bi bi-list-task fs-1 text-success mb-3"></i>
+                        <h5 class="fw-semibold">Assignez les tâches</h5>
+                        <p class="text-muted">Les rôles tournent automatiquement selon la fréquence choisie.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-4 border rounded-4 bg-light hover-shadow">
+                        <i class="bi bi-clock-history fs-1 text-warning mb-3"></i>
+                        <h5 class="fw-semibold">Suivi en temps réel</h5>
+                        <p class="text-muted">Visualisez et validez les tâches du jour facilement.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Avantages -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center fw-bold mb-5 text-dark">Pourquoi choisir Colloc Manager ?</h2>
+            <div class="row g-4 text-center">
+                <div class="col-md-3">
+                    <div class="p-4 rounded-4 bg-white border hover-shadow h-100">
+                        <i class="bi bi-clock fs-1 text-primary mb-3"></i>
+                        <h6 class="fw-bold">Gain de temps</h6>
+                        <p class="text-muted small">Fini les disputes : tout est clair et automatisé.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="p-4 rounded-4 bg-white border hover-shadow h-100">
+                        <i class="bi bi-people fs-1 text-success mb-3"></i>
+                        <h6 class="fw-bold">Travail d’équipe</h6>
+                        <p class="text-muted small">Chaque membre sait quand et quoi faire.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="p-4 rounded-4 bg-white border hover-shadow h-100">
+                        <i class="bi bi-bell fs-1 text-warning mb-3"></i>
+                        <h6 class="fw-bold">Notifications</h6>
+                        <p class="text-muted small">Soyez prévenu automatiquement quand c’est votre tour.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="p-4 rounded-4 bg-white border hover-shadow h-100">
+                        <i class="bi bi-check2-square fs-1 text-danger mb-3"></i>
+                        <h6 class="fw-bold">Organisation claire</h6>
+                        <p class="text-muted small">Tout le monde voit ce qu’il reste à faire.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to action -->
+    <section class="py-5 text-center bg-white border-top">
+        <h3 class="fw-bold mb-4 text-dark">Prêt à rendre votre colocation zen ?</h3>
+        <a href="#" class="btn btn-primary btn-lg px-5 shadow-sm">Rejoindre Colloc Manager</a>
+    </section>
+</div>
+
+<!-- Bootstrap icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<!-- Hover / Shadow effects -->
+<style>
+.hover-shadow {
+    transition: all 0.3s ease;
+}
+.hover-shadow:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.8rem 1.5rem rgba(0, 0, 0, 0.1);
+}
+.btn-primary {
+    background-color: #4a90e2;
+    border-color: #4a90e2;
+}
+.btn-primary:hover {
+    background-color: #357ABD;
+    border-color: #357ABD;
+    transform: translateY(-2px);
+}
+</style>
+
+{% endblock %}

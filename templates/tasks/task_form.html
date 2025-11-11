@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Créer une tâche{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4">Créer une nouvelle tâche</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.taskName.label_tag }} {{ form.taskName }}
+        {{ form.taskDescription.label_tag }} {{ form.taskDescription }}
+        {{ form.durationDays.label_tag }} {{ form.durationDays }}
+        {{ form.rotation_order_input }}
+
+        <div class="mb-3">
+            <label class="form-label">Ordre d'exécution (faites glisser pour choisir l'ordre)</label>
+            <ul id="member-list" class="list-group">
+                {% for member in members %}
+                    <li class="list-group-item" data-id="{{ member.id }}">{{ member.first_name }} {{ member.last_name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Créer la tâche</button>
+    </form>
+</div>
+
+<script>
+    const list = document.getElementById('member-list');
+    const hiddenInput = document.getElementById('id_rotation_order_input');
+
+    // Initialisation de l'ordre
+    function updateHidden() {
+        const ids = Array.from(list.children).map(li => li.dataset.id);
+        hiddenInput.value = ids.join(',');
+    }
+
+    // Drag & drop simple
+    let dragSrcEl = null;
+    list.querySelectorAll('li').forEach(li => {
+        li.draggable = true;
+        li.addEventListener('dragstart', e => { dragSrcEl = li; });
+        li.addEventListener('dragover', e => { e.preventDefault(); });
+        li.addEventListener('drop', e => {
+            if (li !== dragSrcEl) {
+                let nodes = Array.from(list.children);
+                const srcIndex = nodes.indexOf(dragSrcEl);
+                const destIndex = nodes.indexOf(li);
+                if (srcIndex < destIndex) li.after(dragSrcEl);
+                else li.before(dragSrcEl);
+            }
+            updateHidden();
+        });
+    });
+
+    updateHidden();  // initial
+</script>
+
+<style>
+#member-list li {
+    cursor: move;
+    margin-bottom: 5px;
+}
+#member-list li:hover {
+    background-color: #f1f1f1;
+}
+</style>
+{% endblock %}

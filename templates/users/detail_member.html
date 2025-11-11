@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block title %}Profil de {{ member.first_name }} {{ member.last_name }} - Colloc Manager{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+    <!-- HEADER -->
+    <div class="text-center mb-5">
+        <div class="profile-avatar mx-auto mb-4">
+            <i class="bi bi-person-fill"></i>
+        </div>
+        <h2 class="fw-bold text-dark mb-1">
+            {{ member.first_name|default:"" }} {{ member.last_name|default:"" }}
+        </h2>
+        <p class="text-muted">@{{ member.username }}</p>
+        <p class="text-secondary small">
+            <i class="bi bi-envelope me-2"></i>{{ member.email|default:"—" }}
+            <span class="mx-2">•</span>
+            <i class="bi bi-telephone me-2"></i>{{ member.phoneNumber|default:"—" }}
+        </p>
+    </div>
+
+    <!-- INFO CARD -->
+    <div class="card profile-card border-0 shadow-sm mx-auto rounded-4" style="max-width: 700px;">
+        <div class="card-body p-4 p-md-5">
+            <h5 class="fw-semibold text-secondary mb-4">Informations générales</h5>
+
+            <div class="info-item">
+                <span class="label">Nom complet</span>
+                <span class="value">{{ member.first_name }} {{ member.last_name }}</span>
+            </div>
+
+            <div class="info-item">
+                <span class="label">Nom d’utilisateur</span>
+                <span class="value">@{{ member.username }}</span>
+            </div>
+
+            <div class="info-item">
+                <span class="label">Adresse e-mail</span>
+                <span class="value">{{ member.email }}</span>
+            </div>
+
+            <div class="info-item">
+                <span class="label">Téléphone</span>
+                <span class="value">{{ member.phoneNumber }}</span>
+            </div>
+
+            {% if member.room %}
+            <hr class="my-4">
+            <h6 class="fw-semibold text-secondary mb-3">Chambre associée</h6>
+            <div class="info-item">
+                <span class="label">Numéro de chambre</span>
+                <span class="value">{{ member.room.roomNumber }}</span>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="text-center mt-5 d-flex justify-content-center flex-wrap gap-3">
+        <a href="{% url 'list_members' %}" class="btn btn-light rounded-pill px-4 py-2 shadow-sm border">
+            <i class="bi bi-arrow-left me-2"></i>Retour à la liste
+        </a>
+        {% if user.memberStatus == "titulor" %}
+            <a href="{% url 'delete_member' member.pk %}" class="btn btn-danger rounded-pill px-4 py-2 shadow-sm">
+                <i class="bi bi-trash3 me-2"></i>Supprimer ce membre
+            </a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- STYLE -->
+<style>
+    body {
+        background-color: #f9fafc;
+    }
+
+    /* Avatar principal */
+    .profile-avatar {
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        background: linear-gradient(145deg, #ffffff, #f0f2f7);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .profile-avatar i {
+        font-size: 4rem;
+        color: #3b82f6;
+    }
+
+    /* Carte */
+    .profile-card {
+        background: #ffffff;
+        border: 1px solid #eef2f8;
+        transition: all 0.3s ease;
+    }
+
+    .profile-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+    }
+
+    /* Ligne info */
+    .info-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #f1f3f7;
+    }
+
+    .info-item:last-child {
+        border-bottom: none;
+    }
+
+    .label {
+        color: #6c757d;
+        font-weight: 500;
+        font-size: 0.95rem;
+    }
+
+    .value {
+        color: #1a1a1a;
+        font-weight: 600;
+        text-align: right;
+    }
+
+    /* Boutons */
+    .btn-light {
+        background: #fff;
+        transition: all 0.2s ease;
+    }
+
+    .btn-light:hover {
+        background: #f1f3f7;
+    }
+
+    .btn-danger {
+        background: #ef4444;
+        border: none;
+        transition: all 0.2s ease;
+    }
+
+    .btn-danger:hover {
+        background: #dc2626;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(239, 68, 68, 0.3);
+    }
+</style>
+{% endblock %}
