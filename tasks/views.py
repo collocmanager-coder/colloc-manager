@@ -62,7 +62,7 @@ class TaskCreateView(TitulorRequiredMixin, CreateView):
                 message=f"Bonjour {first_executor.first_name},\n\n"
                         f"Vous êtes chargé(e) de la tâche : {task.taskName}.\n"
                         f"Durée : {task.durationDays} jours.\n"
-                        f"Veuillez vous connecter sur l'appli Colloc-Manager pour voir les détails.\nMerci ! (*_*)",
+                        f"Veuillez vous connecter sur l'appli Colloc-Manager https://colloc-manager.onrender.com pour voir les détails.\nMerci ! (*_*)",
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[first_executor.email],
                 fail_silently=False,
@@ -105,7 +105,8 @@ class TaskDeleteView(TitulorRequiredMixin, DeleteView):
             f"Motif : hum il estime que la tache n'est plus importante j'imagine\n\n"
             f"Cette suppression est automatique pour garantir la transparence dans votre room.\n"
             f"Merci de votre compréhension.\n\n"
-            f"L'équipe Colloc Manager (*_*)"
+            f"L'équipe Colloc Manager (*_*)    "
+            f"https://colloc-manager.onrender.com"
         )
 
         # Envoyer le mail à chaque membre individuellement

@@ -123,7 +123,7 @@ class SimpleMemberCreationForm(forms.ModelForm):
             # Envoi du mot de passe par mail
             send_mail(
                 subject="Bienvenue sur Colloc Manager",
-                message=f"Bonjour {member.first_name},\n\nVotre compte a été créé.\n\nNom d’utilisateur : {member.username}\nMot de passe : {temp_password}\n\nVous pouvez vous connecter ici : sur notre site colloc-manager\n\nMerci ! (*_*)",
+                message=f"Bonjour {member.first_name},\n\nVotre compte a été créé.\n\nNom d’utilisateur : {member.username}\nMot de passe : {temp_password}\n\nVous pouvez vous connecter ici : sur notre site colloc-manager\n\nMerci ! (*_*) https://colloc-manager.onrender.com",
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[member.email],
                 fail_silently=False,
