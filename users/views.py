@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import CreateView, DetailView, DeleteView, ListView,UpdateView
 from users.models import RoomMember
 from users.forms import RoomTitulorCreationForm,SimpleMemberCreationForm,ProfileUpdateForm
@@ -7,6 +8,7 @@ from django.contrib.auth.views import LoginView, LogoutView,PasswordChangeView
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
+from users.models import Room
 # Create your views here.
 
 ## Vu pour la page d'accueil
@@ -19,6 +21,43 @@ def home(request):
 class LoginRequiredHomeMixin(LoginRequiredMixin):
     login_url = 'login'
 
+#Une vue qui verifie si on est un superuser enfaite
+class AdminRequiredMixin(LoginRequiredMixin):
+    def test_func(self):
+        return self.request.user.is_authenticated and \
+               self.request.user.is_superuser
+
+    def handle_no_permission(self):
+        # Redirige si pas de permission hum on va personnaliser ca par apres
+        return redirect('home')
+
+class RoomList(AdminRequiredMixin, ListView):
+    model = Room
+    template_name = 'users/room_list.html'
+    context_object_name = 'rooms'
+
+    def get_queryset(self):
+        return Room.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['statuses'] = Room.RoomStatus.choices
+        return context
+    
+class RoomStatusUpdateView(AdminRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        room_id = kwargs.get('pk')
+        new_status = request.POST.get('new_status')
+
+        room = get_object_or_404(Room, pk=room_id)
+
+        valid_statuses = [status[0] for status in Room.RoomStatus.choices]
+        if new_status in valid_statuses:
+            room.roomStatus = new_status
+            room.save()
+        
+        return redirect('room_list')
+    
 class TitulorRequiredMixin(UserPassesTestMixin):
     def test_func(self):
         return self.request.user.is_authenticated and \

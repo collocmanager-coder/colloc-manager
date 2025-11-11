@@ -33,6 +33,11 @@
                         <a class="nav-link link-hover" href="{% url 'help' %}">Aide</a>
                     </li>
                     {% if request.user.is_authenticated %}
+                        {% if request.user.is_superuser %}
+                            <li class="nav-item">
+                                <a class="nav-link link-hover" href="{% url 'rooms' %}">Maisons</a>
+                            </li>
+                        {% endif %}
         
                         <li class="nav-item">
                             <a class="nav-link link-hover" href="{% url 'task_list' %}">Tâches</a>

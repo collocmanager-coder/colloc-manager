@@ -15,4 +15,6 @@ urlpatterns = [
     path('profile/edit/', views.ProfileUpdateView.as_view(), name='profile_update'),
     path('profile/password/', views.UserPasswordChangeView.as_view(), name='change_password'),
     path('help/',views.help,name='help'),
+    path('rooms/', views.RoomList.as_view(), name='room_list'),
+    path('rooms/<int:pk>/update_status/', views.RoomStatusUpdateView.as_view(), name='room_status_update'),
 ]
