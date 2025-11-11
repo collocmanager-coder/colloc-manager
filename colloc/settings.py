@@ -29,7 +29,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [config('ALLOWED_HOSTS')]
 
 ##### Pour l'envoi des mails aux users
 ###### Hum askip c'est pas bon de mettre les valeurs la en dur mais bon moi je vais les mettre
