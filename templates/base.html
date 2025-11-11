@@ -35,7 +35,7 @@
                     {% if request.user.is_authenticated %}
                         {% if request.user.is_superuser %}
                             <li class="nav-item">
-                                <a class="nav-link link-hover" href="{% url 'rooms' %}">Maisons</a>
+                                <a class="nav-link link-hover" href="{% url 'room_list' %}">Maisons</a>
                             </li>
                         {% endif %}
         
