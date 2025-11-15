@@ -1,7 +1,7 @@
 from django.conf import settings
 import requests
 
-BREVO_API_BASE_URL = "https://api.brevo.com/v3.1/send"
+BREVO_API_BASE_URL = "https://api.brevo.com/v3.1/smtp/email"
 
 def send_brevo_email(to_email, subject, text_content, html_content=None):
     """
