@@ -1,6 +1,7 @@
 from django import forms
 
 from colloc import settings
+from colloc.email import send_brevo_email
 from .models import RoomMember, Room
 import string,secrets
 from django.core.mail import send_mail
@@ -120,17 +121,44 @@ class SimpleMemberCreationForm(forms.ModelForm):
         if commit:
             member.save()
 
-            # Envoi du mot de passe par mail
-            send_mail(
-                subject="Bienvenue sur Colloc Manager",
-                message=f"Bonjour {member.first_name},\n\nVotre compte a été créé.\n\nNom d’utilisateur : {member.username}\nMot de passe : {temp_password}\n\nVous pouvez vous connecter ici : sur notre site colloc-manager\n\nMerci ! (*_*) https://colloc-manager.onrender.com",
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[member.email],
-                fail_silently=False,
+            # Envoi du mot de passe par mail via Brevo
+            subject = "Bienvenue sur Colloc Manager"
+            text_content = f"""
+Bonjour {member.first_name},
+
+Votre compte a été créé.
+
+Nom d’utilisateur : {member.username}
+Mot de passe : {temp_password}
+
+Vous pouvez vous connecter ici : https://colloc-manager.onrender.com
+
+Merci ! (*_*)
+"""
+            html_content = f"""
+<h2>Bonjour {member.first_name},</h2>
+<p>Votre compte a été créé.</p>
+<ul>
+<li><strong>Nom d’utilisateur :</strong> {member.username}</li>
+<li><strong>Mot de passe :</strong> {temp_password}</li>
+</ul>
+<p>Vous pouvez vous connecter ici : <a href="https://colloc-manager.onrender.com">Colloc Manager</a></p>
+<p>Merci ! (*_*)</p>
+"""
+            status, result = send_brevo_email(
+                to_email=member.email,
+                subject=subject,
+                text_content=text_content,
+                html_content=html_content
             )
 
+            if status != 200 and status != 201:
+                print(f"Erreur lors de l'envoi de l'email : {result}")
+            else:
+                print(f"Email envoyé avec succès à {member.email}")
+
         return member
-    
+        
 
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
