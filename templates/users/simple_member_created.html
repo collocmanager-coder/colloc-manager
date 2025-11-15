@@ -1,17 +1,146 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-5">
-    <center>
-        <h2>Membre créé avec succès !</h2>
-        <p>Voici les identifiants du membre :</p>
-        <ul>
-            <li><strong>Nom d’utilisateur :</strong> {{ member.username }}</li>
-            <li><strong>Mot de passe temporaire :</strong> {{ temp_password }}</li>
-        </ul>
-        <p>Notez-les pour le transmettre au membre. et surtout n'oubliez pas de les noter avant de sortir sinon c'est pas bon</p>
-        <a href="{% url 'list_members' %}" class="btn btn-primary">Retour à la liste des membres</a>
-    </center>
-    
-</div>
+<style>
+  /* petits ajustements locaux : tu peux les mettre dans ton CSS global si tu veux */
+  .credential-card {
+    max-width: 720px;
+    margin: 36px auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    overflow: hidden;
+  }
+  .hero {
+    background: linear-gradient(90deg,#6b8cff 0%,#7dd3fc 100%);
+    color: white;
+    padding: 28px;
+  }
+  .note {
+    background:#fff7ed;
+    border-left:4px solid #f59e0b;
+    padding:16px;
+    border-radius:8px;
+  }
+  .credential {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+    font-size: 1.05rem;
+  }
+  .small-muted { color: #6b7280; font-size:0.95rem; }
+  .btn-copy { min-width: 110px; }
+  @media (max-width:576px){
+    .credential-card { margin: 16px; }
+  }
+</style>
+
+<main class="credential-card bg-white">
+  <div class="hero d-flex align-items-center justify-content-between">
+    <div>
+      <h2 class="h4 mb-1">Membre créé </h2>
+      <p class="small-muted mb-0">Identifiants générés  partage-les en toute sécurité avec le membre.</p>
+    </div>
+    <div class="text-end">
+      <a href="{% url 'list_members' %}" class="btn btn-light btn-sm">Retour à la liste</a>
+    </div>
+  </div>
+
+  <div class="p-4">
+    <div class="row g-3">
+      <div class="col-12 col-md-7">
+        <div class="mb-3">
+          <label class="form-label small-muted">Nom complet</label>
+          <div class="h6 mb-0">{{ member.first_name }} {{ member.last_name }}</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small-muted">Adresse email</label>
+          <div class="small text-truncate">{{ member.email }}</div>
+        </div>
+
+        <div class="mb-3 note">
+          <strong>Important — afficher & noter :</strong>
+          <p class="mb-0">Copiez et transmettez ces identifiants au membre maintenant. <span class="d-block mt-1 small-muted">Le mot de passe affiché est temporaire : le membre devra le changer à la première connexion.</span></p>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-5">
+        <div class="card border-0 shadow-sm">
+          <div class="card-body">
+            <h3 class="h6 mb-3">Identifiants</h3>
+
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <div>
+                <div class="small-muted">Nom d’utilisateur</div>
+                <div class="credential" id="username">{{ member.username }}</div>
+              </div>
+              <div class="text-end">
+                <button class="btn btn-outline-primary btn-sm btn-copy" data-copy-target="#username">Copier</button>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <div>
+                <div class="small-muted">Mot de passe temporaire</div>
+                <div class="credential text-break" id="temp_password">{{ temp_password }}</div>
+              </div>
+              <div class="text-end">
+                <button class="btn btn-outline-primary btn-sm btn-copy" data-copy-target="#temp_password">Copier</button>
+              </div>
+            </div>
+
+            <div class="d-flex gap-2">
+              <button class="btn btn-primary btn-sm" id="printBtn">Imprimer / Enregistrer</button>
+              <a class="btn btn-light btn-sm" href="{% url 'list_members' %}">Terminé</a>
+            </div>
+
+            <div id="copyAlert" class="mt-3" style="display:none;">
+              <div class="alert alert-success py-2 mb-0" role="alert">Copié dans le presse-papiers ✔️</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="small-muted text-center">
+      <strong>Conseil sécurité :</strong> ne partagez pas ces identifiants par message non sécurisé. Encouragez le membre à changer son mot de passe au premier accès.
+    </div>
+  </div>
+</main>
+
+<script>
+  // copy to clipboard for copy buttons
+  document.querySelectorAll('.btn-copy').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      const target = document.querySelector(btn.getAttribute('data-copy-target'));
+      if (!target) return;
+      try {
+        await navigator.clipboard.writeText(target.textContent.trim());
+        // show success temporarily
+        const alertEl = document.getElementById('copyAlert');
+        alertEl.style.display = 'block';
+        setTimeout(()=> alertEl.style.display = 'none', 1600);
+      } catch (err) {
+        alert('Impossible de copier — copie manuelle requise.');
+      }
+    });
+  });
+
+  // print only the credentials card
+  document.getElementById('printBtn').addEventListener('click', () => {
+    const content = document.querySelector('.credential-card').innerHTML;
+    const win = window.open('', '_blank', 'width=700,height=600');
+    win.document.write(`<html><head><title>Identifiants</title>
+      <style>
+        body{font-family:Arial,Helvetica,sans-serif;padding:24px}
+        .credential{font-family:monospace;font-size:18px}
+        .small-muted{color:#6b7280}
+      </style>
+    </head><body>${content}</body></html>`);
+    win.document.close();
+    win.focus();
+    setTimeout(()=>{ win.print(); win.close(); }, 300);
+  });
+</script>
 {% endblock %}
