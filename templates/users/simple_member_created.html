@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Membre créé avec succès !</h2>
+    <p>Voici les identifiants du membre :</p>
+    <ul>
+        <li><strong>Nom d’utilisateur :</strong> {{ member.username }}</li>
+        <li><strong>Mot de passe temporaire :</strong> {{ temp_password }}</li>
+    </ul>
+    <p>Notez-les pour le transmettre au membre.</p>
+    <a href="{% url 'list_members' %}" class="btn btn-primary">Retour à la liste des membres</a>
+</div>
+{% endblock %}

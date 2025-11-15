@@ -157,7 +157,7 @@ Merci ! (*_*)
             else:
                 print(f"Email envoyé avec succès à {member.email}")
 
-        return member
+        return member,temp_password
         
 
 class ProfileUpdateForm(forms.ModelForm):

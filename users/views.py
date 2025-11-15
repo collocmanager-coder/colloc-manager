@@ -88,7 +88,6 @@ class CreateSimpleMemberView(TitulorRequiredMixin, CreateView):
     model = RoomMember
     form_class = SimpleMemberCreationForm
     template_name = 'users/create_simple_member.html'
-    success_url = reverse_lazy('list_members')
 
     def dispatch(self, request, *args, **kwargs):
         # Vérifie si la room du titulor est vérifiée
@@ -99,13 +98,19 @@ class CreateSimpleMemberView(TitulorRequiredMixin, CreateView):
     def form_valid(self, form):
         # Associe le membre à la chambre du titulor
         room = self.request.user.room
-        member = form.save(room=room)
-        self.object = member
+        member, temp_password = form.save(room=room)  # On récupère le mot de passe
+        context = {
+            'member': member,
+            'temp_password': temp_password
+        }
+        return render(self.request, 'users/simple_member_created.html', context)
 
-        return redirect(self.get_success_url())
-    
+
 def room_not_verified(request):
     return render(request,'users/room_not_verified.html')
+
+def simple_member_created(request):
+    return render(request,'simple_member_created.html')
 
 ################################## Vu pour permettre a l'utilisateur la gestion de son profil ##########
 class ProfileDetailView(LoginRequiredHomeMixin, DetailView):
