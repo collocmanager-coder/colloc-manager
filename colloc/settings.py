@@ -29,7 +29,11 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['colloc-manager.onrender.com']
+ALLOWED_HOSTS = [
+    "colloc-manager.com",
+    "www.colloc-manager.com",
+    'colloc-manager.onrender.com',
+]
 
 ##### Pour l'envoi des mails aux users
 ###### Hum askip c'est pas bon de mettre les valeurs la en dur mais bon moi je vais les mettre
