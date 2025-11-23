@@ -1,10 +1,10 @@
 from django import forms
 
 from colloc import settings
-from colloc.email import send_brevo_email
 from .models import RoomMember, Room
 import string,secrets
 from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
 
 class RoomTitulorCreationForm(forms.ModelForm):
     first_name = forms.CharField(
@@ -121,7 +121,7 @@ class SimpleMemberCreationForm(forms.ModelForm):
         if commit:
             member.save()
 
-            # Envoi du mot de passe par mail via Brevo
+            # --- Envoi de l'email via Django / Zoho SMTP ---
             subject = "Bienvenue sur Colloc Manager"
             text_content = f"""
 Bonjour {member.first_name},
@@ -145,20 +145,21 @@ Merci ! (*_*)
 <p>Vous pouvez vous connecter ici : <a href="https://colloc-manager.onrender.com">Colloc Manager</a></p>
 <p>Merci ! (*_*)</p>
 """
-            status, result = send_brevo_email(
-                to_email=member.email,
-                subject=subject,
-                text_content=text_content,
-                html_content=html_content
-            )
 
-            if status != 200 and status != 201:
-                print(f"Erreur lors de l'envoi de l'email : {result}")
-            else:
+            try:
+                msg = EmailMultiAlternatives(
+                    subject=subject,
+                    body=text_content,
+                    from_email=None,  # Utilise DEFAULT_FROM_EMAIL de settings.py
+                    to=[member.email],
+                )
+                msg.attach_alternative(html_content, "text/html")
+                msg.send()
                 print(f"Email envoyé avec succès à {member.email}")
+            except Exception as e:
+                print(f"Erreur lors de l'envoi de l'email : {e}")
 
-        return member,temp_password
-        
+        return member, temp_password        
 
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:

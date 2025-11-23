@@ -38,18 +38,14 @@ ALLOWED_HOSTS = [
 ##### Pour l'envoi des mails aux users
 ###### Hum askip c'est pas bon de mettre les valeurs la en dur mais bon moi je vais les mettre
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = 'bdaqzgnkdoobdagb'
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_HOST='smtp.zoho.eu'
+EMAIL_PORT=587
+EMAIL_HOST_USER=config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD=config('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS=True
+DEFAULT_FROM_EMAIL='no-reply@colloc-manager.com'
 
-
-BREVO_API_KEY = config('BREVO_API_KEY')
-BREVO_SENDER_EMAIL = config('BREVO_SENDER_EMAIL')
-BREVO_SENDER_NAME = config('BREVO_SENDER_NAME')
 
 AUTH_USER_MODEL = 'users.RoomMember'
 

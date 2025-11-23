@@ -56,17 +56,17 @@ class TaskCreateView(TitulorRequiredMixin, CreateView):
             first_executor = RoomMember.objects.get(id=rotation_ids[0])
             TaskExecution.objects.create(roomTask=task, executor=first_executor, turn_index=0)
 
-            # # Envoi du mail
-            # send_mail(
-            #     subject=f"Nouvelle tâche : {task.taskName}",
-            #     message=f"Bonjour {first_executor.first_name},\n\n"
-            #             f"Vous êtes chargé(e) de la tâche : {task.taskName}.\n"
-            #             f"Durée : {task.durationDays} jours.\n"
-            #             f"Veuillez vous connecter sur l'appli Colloc-Manager https://colloc-manager.onrender.com pour voir les détails.\nMerci ! (*_*)",
-            #     from_email=settings.DEFAULT_FROM_EMAIL,
-            #     recipient_list=[first_executor.email],
-            #     fail_silently=False,
-            # )
+            # Envoi du mail
+            send_mail(
+                subject=f"Nouvelle tâche : {task.taskName}",
+                message=f"Bonjour {first_executor.first_name},\n\n"
+                        f"Vous êtes chargé(e) de la tâche : {task.taskName}.\n"
+                        f"Durée : {task.durationDays} jours.\n"
+                        f"Veuillez vous connecter sur l'appli Colloc-Manager https://colloc-manager.com/tasks/all/tasks/ pour voir les détails.\nMerci ! (*_*)",
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[first_executor.email],
+                fail_silently=False,
+            )
 
         return super().form_valid(form)
 
@@ -109,19 +109,19 @@ class TaskDeleteView(TitulorRequiredMixin, DeleteView):
             f"https://colloc-manager.onrender.com"
         )
 
-        # # Envoyer le mail à chaque membre individuellement
-        # for member in members:
-        #     if member.email:
-        #         try:
-        #             send_mail(
-        #                 subject=mysubject,
-        #                 message=mymessage,
-        #                 from_email=settings.DEFAULT_FROM_EMAIL,
-        #                 recipient_list=[member.email],
-        #                 fail_silently=False,
-        #             )
-        #         except Exception as e:
-        #             print("Il y'a un probleme")
+        # Envoyer le mail à chaque membre individuellement
+        for member in members:
+            if member.email:
+                try:
+                    send_mail(
+                        subject=mysubject,
+                        message=mymessage,
+                        from_email=settings.DEFAULT_FROM_EMAIL,
+                        recipient_list=[member.email],
+                        fail_silently=False,
+                    )
+                except Exception as e:
+                    print("Il y'a un probleme")
 
         # Supprimer la tâche
         return super().delete(request, *args, **kwargs)    
