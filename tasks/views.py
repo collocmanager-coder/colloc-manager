@@ -1,4 +1,5 @@
-from datetime import timedelta
+from datetime import timedelta, timezone
+from time import time
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import View
@@ -9,7 +10,7 @@ from tasks.forms import TaskForm, TaskUpdateForm
 from users.models import RoomMember
 from users.views import TitulorRequiredMixin,LoginRequiredHomeMixin
 from django.core.mail import send_mail
-from django.utils import timezone
+from colloc.email import send_task_deleted_email
 
 # Liste des tâches
 class TaskListView(LoginRequiredHomeMixin, ListView):
@@ -104,26 +105,17 @@ class TaskDeleteView(TitulorRequiredMixin, DeleteView):
             f"a supprimé la tâche suivante : '{task.taskName}'.\n\n"
             f"Cette suppression est automatique pour garantir la transparence dans votre room.\n"
             f"Merci de votre compréhension.\n\n"
-            f"L'équipe Colloc Manager (*_*)    "
+            f"L'équipe Colloc Manager (*_*)\n"
             f"https://colloc-manager.com"
         )
 
-        # Envoyer le mail à chaque membre individuellement
+        # Envoyer le mail à chaque membre individuellement via Celery
         for member in members:
             if member.email:
-                try:
-                    send_mail(
-                        subject=mysubject,
-                        message=mymessage,
-                        from_email=settings.DEFAULT_FROM_EMAIL,
-                        recipient_list=[member.email],
-                        fail_silently=False,
-                    )
-                except Exception as e:
-                    print("Il y'a un probleme")
+                send_task_deleted_email.delay(member.email, mysubject, mymessage)
 
         # Supprimer la tâche
-        return super().delete(request, *args, **kwargs)    
+        return super().delete(request, *args, **kwargs)
 
 ### Pour les taskExecutions
 class TaskExecutionListView(LoginRequiredHomeMixin, ListView):
