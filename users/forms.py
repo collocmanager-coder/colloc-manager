@@ -126,12 +126,12 @@ class SimpleMemberCreationForm(forms.ModelForm):
             text_content = f"""
 Bonjour {member.first_name},
 
-Votre compte a été créé.
+Votre compte colloc-manager a été créé.
 
 Nom d’utilisateur : {member.username}
 Mot de passe : {temp_password}
 
-Vous pouvez vous connecter ici : https://colloc-manager.onrender.com
+Vous pouvez vous connecter ici : https://colloc-manager.com/tasks/all/tasks/
 
 Merci ! (*_*)
 """
@@ -142,7 +142,7 @@ Merci ! (*_*)
 <li><strong>Nom d’utilisateur :</strong> {member.username}</li>
 <li><strong>Mot de passe :</strong> {temp_password}</li>
 </ul>
-<p>Vous pouvez vous connecter ici : <a href="https://colloc-manager.onrender.com">Colloc Manager</a></p>
+<p>Vous pouvez vous connecter ici : <a href="https://colloc-manager.com/tasks/all/tasks/">Colloc Manager</a></p>
 <p>Merci ! (*_*)</p>
 """
 

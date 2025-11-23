@@ -102,11 +102,10 @@ class TaskDeleteView(TitulorRequiredMixin, DeleteView):
             f"Bonjour,\n\n"
             f"Le titulaire de votre colocation ({room.titulor.first_name} {room.titulor.last_name}) "
             f"a supprimé la tâche suivante : '{task.taskName}'.\n\n"
-            f"Motif : hum il estime que la tache n'est plus importante j'imagine\n\n"
             f"Cette suppression est automatique pour garantir la transparence dans votre room.\n"
             f"Merci de votre compréhension.\n\n"
             f"L'équipe Colloc Manager (*_*)    "
-            f"https://colloc-manager.onrender.com"
+            f"https://colloc-manager.com"
         )
 
         # Envoyer le mail à chaque membre individuellement
@@ -216,7 +215,7 @@ class MarkTaskDoneView(LoginRequiredHomeMixin, View):
                         message=f"Bonjour {next_executor.first_name},\n\n"
                                 f"Vous êtes maintenant chargé(e) de la tâche : {execution.roomTask.taskName}.\n"
                                 f"Délai : {execution.roomTask.durationDays} jours.\n"
-                                f"Connectez-vous sur Colloc Manager pour voir les détails.\nMerci !",
+                                f"Connectez-vous sur Colloc Manager a l'adresse https://colloc-manager.com/tasks/all/tasks/ pour voir les détails.\nMerci !",
                         from_email=settings.DEFAULT_FROM_EMAIL,
                         recipient_list=[next_executor.email],
                         fail_silently=False,
