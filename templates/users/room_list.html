@@ -24,10 +24,10 @@
                 {% for room in rooms %}
                 <tr>
                     <td>{{ room.pk }}</td>
-                    <td>**{{ room.roomNumber }}**</td>
+                    <td>{{ room.roomNumber }}</td>
                     <td>
                         {% if room.roomTitulor %}
-                            {{ room.roomTitulor.username }} ({{ room.roomTitulor.MemberStatus.TITULOR.label }})
+                            {{ room.roomTitulor.email }} ({{ room.roomTitulor.MemberStatus.TITULOR.label }})
                         {% else %}
                             <span class="text-danger">Non assigné</span>
                         {% endif %}

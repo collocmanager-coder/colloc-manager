@@ -2,7 +2,6 @@
 
 {% block content %}
 <style>
-  /* petits ajustements locaux : tu peux les mettre dans ton CSS global si tu veux */
   .credential-card {
     max-width: 720px;
     margin: 36px auto;
@@ -35,8 +34,8 @@
 <main class="credential-card bg-white">
   <div class="hero d-flex align-items-center justify-content-between">
     <div>
-      <h2 class="h4 mb-1">Membre créé </h2>
-      <p class="small-muted mb-0">Identifiants générés  partage-les en toute sécurité avec le membre.</p>
+      <h2 class="h4 mb-1">Membre créé</h2>
+      <p class="small-muted mb-0">Les identifiants ont été générés. Partage-les en toute sécurité avec le membre.</p>
     </div>
     <div class="text-end">
       <a href="{% url 'list_members' %}" class="btn btn-light btn-sm">Retour à la liste</a>
@@ -46,19 +45,21 @@
   <div class="p-4">
     <div class="row g-3">
       <div class="col-12 col-md-7">
-        <div class="mb-3">
-          <label class="form-label small-muted">Nom complet</label>
-          <div class="h6 mb-0">{{ member.first_name }} {{ member.last_name }}</div>
-        </div>
 
         <div class="mb-3">
-          <label class="form-label small-muted">Adresse email</label>
+          <label class="form-label small-muted">Adresse e-mail</label>
           <div class="small text-truncate">{{ member.email }}</div>
         </div>
 
         <div class="mb-3 note">
-          <strong>Important — afficher & noter :</strong>
-          <p class="mb-0">Copiez et transmettez ces identifiants au membre maintenant. <span class="d-block mt-1 small-muted">Le mot de passe affiché est temporaire : le membre devra le changer à la première connexion.</span></p>
+          <strong>Important :</strong>
+          <p class="mb-0">
+            Copie et transmet ces identifiants au membre maintenant.
+            <span class="d-block mt-1 small-muted">
+              Le mot de passe affiché est temporaire : le membre devra le modifier lors de sa première connexion.
+              Un e-mail contenant ses identifiants lui a également été envoyé.
+            </span>
+          </p>
         </div>
       </div>
 
@@ -104,30 +105,27 @@
     <hr class="my-4">
 
     <div class="small-muted text-center">
-      <strong>Conseil sécurité :</strong> ne partagez pas ces identifiants par message non sécurisé. Encouragez le membre à changer son mot de passe au premier accès.
+      <strong>Conseil de sécurité :</strong> ne partage pas ces identifiants via des moyens non sécurisés. Encourage le membre à changer son mot de passe dès sa première connexion.
     </div>
   </div>
 </main>
 
 <script>
-  // copy to clipboard for copy buttons
   document.querySelectorAll('.btn-copy').forEach(btn => {
     btn.addEventListener('click', async (e) => {
       const target = document.querySelector(btn.getAttribute('data-copy-target'));
       if (!target) return;
       try {
         await navigator.clipboard.writeText(target.textContent.trim());
-        // show success temporarily
         const alertEl = document.getElementById('copyAlert');
         alertEl.style.display = 'block';
         setTimeout(()=> alertEl.style.display = 'none', 1600);
       } catch (err) {
-        alert('Impossible de copier — copie manuelle requise.');
+        alert('Impossible de copier — veuillez copier manuellement.');
       }
     });
   });
 
-  // print only the credentials card
   document.getElementById('printBtn').addEventListener('click', () => {
     const content = document.querySelector('.credential-card').innerHTML;
     const win = window.open('', '_blank', 'width=700,height=600');

@@ -35,12 +35,15 @@ class RoomMember(AbstractUser):
         TITULOR = 'titulor','Titulaire de la maison'
         SIMPLE_MEMBER = 'simple_member','Simple membre'
     room = models.ForeignKey(Room,on_delete=models.CASCADE, related_name="members",null=True, blank=True)
-    phoneNumber = models.CharField(max_length=15)
     memberStatus = models.CharField(
         max_length=50,
         choices= MemberStatus.choices,
         default= MemberStatus.SIMPLE_MEMBER,
     )
+    email = models.EmailField(unique=True)
+    first_name = None
+    last_name = None
+    phoneNumber = None
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

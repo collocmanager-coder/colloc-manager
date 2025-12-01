@@ -21,29 +21,7 @@
                     <form method="post" novalidate>
                         {% csrf_token %}
 
-                        <!-- Nom -->
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Nom</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light border-0"><i class="bi bi-person"></i></span>
-                                {{ form.last_name }}
-                            </div>
-                            {% if form.last_name.errors %}
-                                <div class="text-danger small mt-1">{{ form.last_name.errors }}</div>
-                            {% endif %}
-                        </div>
-
-                        <!-- Prénom -->
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Prénom</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light border-0"><i class="bi bi-person-badge"></i></span>
-                                {{ form.first_name }}
-                            </div>
-                            {% if form.first_name.errors %}
-                                <div class="text-danger small mt-1">{{ form.first_name.errors }}</div>
-                            {% endif %}
-                        </div>
+                        
 
                         <!-- Nom d’utilisateur -->
                         <div class="mb-3">
@@ -69,17 +47,7 @@
                             {% endif %}
                         </div>
 
-                        <!-- Téléphone -->
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Téléphone</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light border-0"><i class="bi bi-telephone"></i></span>
-                                {{ form.phoneNumber }}
-                            </div>
-                            {% if form.phoneNumber.errors %}
-                                <div class="text-danger small mt-1">{{ form.phoneNumber.errors }}</div>
-                            {% endif %}
-                        </div>
+                        
 
                         <!-- Mot de passe -->
                         <div class="mb-3">

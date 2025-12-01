@@ -60,7 +60,7 @@ class TaskCreateView(TitulorRequiredMixin, CreateView):
             # Envoi du mail
             send_mail(
                 subject=f"Nouvelle tâche : {task.taskName}",
-                message=f"Bonjour {first_executor.first_name},\n\n"
+                message=f"Bonjour {first_executor.username},\n\n"
                         f"Vous êtes chargé(e) de la tâche : {task.taskName}.\n"
                         f"Durée : {task.durationDays} jours.\n"
                         f"Veuillez vous connecter sur l'appli Colloc-Manager https://colloc-manager.com/tasks/all/tasks/ pour voir les détails.\nMerci ! (*_*)",
@@ -101,7 +101,7 @@ class TaskDeleteView(TitulorRequiredMixin, DeleteView):
         mysubject = f"Tâche supprimée : {task.taskName}"
         mymessage = (
             f"Bonjour,\n\n"
-            f"Le titulaire de votre colocation ({room.titulor.first_name} {room.titulor.last_name}) "
+            f"Le titulaire de votre colocation  "
             f"a supprimé la tâche suivante : '{task.taskName}'.\n\n"
             f"Cette suppression est automatique pour garantir la transparence dans votre room.\n"
             f"Merci de votre compréhension.\n\n"
@@ -204,7 +204,7 @@ class MarkTaskDoneView(LoginRequiredHomeMixin, View):
                     # Envoyer mail à la prochaine personne
                     send_mail(
                         subject=f"Nouvelle tâche à exécuter : {execution.roomTask.taskName}",
-                        message=f"Bonjour {next_executor.first_name},\n\n"
+                        message=f"Bonjour {next_executor.username},\n\n"
                                 f"Vous êtes maintenant chargé(e) de la tâche : {execution.roomTask.taskName}.\n"
                                 f"Délai : {execution.roomTask.durationDays} jours.\n"
                                 f"Connectez-vous sur Colloc Manager a l'adresse https://colloc-manager.com/tasks/all/tasks/ pour voir les détails.\nMerci !",

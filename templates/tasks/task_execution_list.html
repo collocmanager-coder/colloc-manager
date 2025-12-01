@@ -45,9 +45,9 @@
                         </div>
 
                         <div class="row mb-2">
-                            <div class="col-md-4"><strong>Membre en charge :</strong> {{ exec.executor.first_name }} {{ exec.executor.last_name }}</div>
+                            <div class="col-md-4"><strong>Membre en charge :</strong> {{ exec.executor.username }}</div>
                             {% if exec.next_executor_display %}
-                                <div class="col-md-4 text-info"><strong>Prochaine personne :</strong> {{ exec.next_executor_display.first_name }} {{ exec.next_executor_display.last_name }}</div>
+                                <div class="col-md-4 text-info"><strong>Prochaine personne :</strong> {{ exec.next_executor_display.username }} </div>
                             {% endif %}
                         </div>
 
@@ -56,9 +56,9 @@
                             <ul class="list-inline mb-0">
                                 {% for member in exec.rotation_members_display %}
                                     {% if member.id == exec.executor.id %}
-                                        <li class="list-inline-item badge bg-success text-white me-1 mb-1">{{ member.first_name }} {{ member.last_name }}</li>
+                                        <li class="list-inline-item badge bg-success text-white me-1 mb-1">{{ member.username }}</li>
                                     {% else %}
-                                        <li class="list-inline-item badge bg-secondary text-white me-1 mb-1">{{ member.first_name }} {{ member.last_name }}</li>
+                                        <li class="list-inline-item badge bg-secondary text-white me-1 mb-1">{{ member.username }}</li>
                                     {% endif %}
                                 {% endfor %}
                             </ul>
