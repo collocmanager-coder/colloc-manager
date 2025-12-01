@@ -79,7 +79,7 @@ class SimpleMemberCreationForm(forms.ModelForm):
         if commit:
             member.save()
             subject = "Bienvenue sur Colloc Manager"
-            text = f"Voici votre compte:\nIdentifiant: {member.username}\nMot de passe: {temp_password}"
+            text = f"Voici votre compte:\nIdentifiant: {member.username}\nMot de passe: {temp_password} veuillez entrer ces identifiants de connexion dans cette page de connexion https://colloc-manager.onrender.com/login/ pour pouvoir acceder a colloc manager"
             send_mail(subject, text, settings.DEFAULT_FROM_EMAIL, [member.email])
 
         return member, temp_password
