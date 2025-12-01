@@ -197,3 +197,8 @@ class CustomLogoutView(LoginRequiredHomeMixin, LogoutView):
 
 def help(request):
     return render(request,'users/help.html')
+
+
+#Une vu qui est base sur la confidentialite
+def confidentiality(request):
+    return render(request,'users/confidentiality.html')

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Politique de confidentialité - Colloc Manager{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="text-center mb-5">
+    <h1 class="fw-bold text-primary display-5">🔒 Politique de confidentialité</h1>
+    <p class="text-muted lead">Chez Colloc Manager, votre vie privée est notre priorité.</p>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card shadow-lg border-0 rounded-4 p-4 mb-4">
+        <h4 class="fw-bold text-primary mb-3">Collecte minimale des données</h4>
+        <p class="text-muted">
+          Nous ne collectons que les informations strictement nécessaires pour faire fonctionner l'application : 
+          <strong>votre adresse e-mail et votre numéro de chambre.</strong>
+        </p>
+        <p class="text-muted">
+          Le numéro de chambre peut être n'importe quoi, mais vous devez le renseigner afin que nous puissions nous assurer que votre maison est bien à votre nom. 
+          Cela nous permet de maintenir un système clair et de libérer de l'espace pour que d'autres utilisateurs puissent utiliser l'application.
+        </p>
+      </div>
+
+      <div class="card shadow-lg border-0 rounded-4 p-4 mb-4">
+        <h4 class="fw-bold text-success mb-3">Protection de votre vie privée</h4>
+        <p class="text-muted">
+          Nous n'avons aucune intention de collecter ou d'utiliser vos données personnelles à des fins commerciales ou publicitaires. 
+          L'application est hébergée sur <strong>Render</strong> et la base de données est gérée de manière à ne conserver que l'adresse e-mail et le numéro de chambre, 
+          car c'est strictement nécessaire au fonctionnement du service.
+        </p>
+        <p class="text-muted">
+          Nous faisons tout pour protéger votre vie privée et éviter toute intrusion inutile dans vos informations personnelles.
+        </p>
+      </div>
+
+      <div class="card shadow-lg border-0 rounded-4 p-4 mb-4">
+        <h4 class="fw-bold text-warning mb-3">Suppression et modification des données</h4>
+        <p class="text-muted">
+          Dès que vous demandez la suppression ou la modification de votre compte, une requête est immédiatement envoyée et traitée. 
+          Il n’y a aucune manipulation cachée : vos données sont supprimées ou modifiées dès votre action.
+        </p>
+      </div>
+
+      <div class="card shadow-lg border-0 rounded-4 p-4 mb-4">
+        <h4 class="fw-bold text-info mb-3">Contribuer et nous contacter</h4>
+        <p class="text-muted">
+          Si vous souhaitez nous aider à améliorer l'application ou à renforcer la protection des données, vos contributions sont les bienvenues et nous feront grandement plaisir.
+        </p>
+        <p class="text-muted">
+          Pour toute question, suggestion ou discussion sur la confidentialité, vous pouvez nous contacter à <a href="mailto:contact@colloc-manager.com">contact@colloc-manager.com</a>.
+        </p>
+      </div>
+
+      <div class="text-center mt-5">
+        <h4 class="fw-bold text-primary">Résumé</h4>
+        <p class="text-muted lead">
+          Colloc Manager respecte votre vie privée. Nous collectons uniquement les données nécessaires pour que vous puissiez utiliser l'application en toute sécurité. 
+          Aucune utilisation commerciale ou malveillante de vos informations n'est effectuée.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.card {
+    transition: all 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+</style>
+{% endblock %}

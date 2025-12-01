@@ -18,4 +18,5 @@ urlpatterns = [
     path('rooms/', views.RoomList.as_view(), name='room_list'),
     path('rooms/<int:pk>/update_status/', views.RoomStatusUpdateView.as_view(), name='room_status_update'),
     path('simple/members/created',views.simple_member_created,name='simple_member_created'),
+    path('confidentiality/',views.confidentiality,name='confidentiality'),
 ]

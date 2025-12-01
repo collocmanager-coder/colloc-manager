@@ -53,6 +53,13 @@
                             </div>
                         {% endfor %}
 
+                        <div class="text-center mt-3 mb-4">
+                            <small class="text-muted">
+                                En inscrivant ce membre, vous asssumez lui avoir parlé de nos 
+                                <a href="{% url 'confidentiality' %}" class="text-decoration-none fw-semibold">politiques de confidentialité</a> et qu'il est d'accord avec eux.
+                            </small>
+                        </div>
+
                         <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold shadow-sm">
                             <i class="bi bi-person-plus me-1"></i> Ajouter le membre
                         </button>
