@@ -58,7 +58,7 @@ class RoomStatusUpdateView(AdminRequiredMixin, View):
         if new_status in valid_statuses:
             room.roomStatus = new_status
             object = 'Validation de votre room'
-            message = f'Bonjour, \nVotre chambre a été vérifié avec succès.\n Vous pouvez maintenant vous connecter sur notre application pour pouvoir gerer les membres de votre room. Merci . '
+            message = f'Bonjour, \nVotre chambre a été {new_status} avec succès.\n Vous pouvez maintenant vous connecter sur notre application https://colloc-manager.com/ pour pouvoir gerer les membres de votre room. Merci . '
             send_mail(object, message, settings.DEFAULT_FROM_EMAIL, [room.roomTitulor.email])
             room.save()
         
