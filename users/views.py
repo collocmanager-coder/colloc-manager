@@ -9,6 +9,9 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from users.models import Room
+from django.core.mail import send_mail
+from colloc import settings
+
 # Create your views here.
 
 ## Vu pour la page d'accueil
@@ -54,6 +57,9 @@ class RoomStatusUpdateView(AdminRequiredMixin, View):
         valid_statuses = [status[0] for status in Room.RoomStatus.choices]
         if new_status in valid_statuses:
             room.roomStatus = new_status
+            object = 'Validation de votre room'
+            message = f'Bonjour, \nVotre chambre a été vérifié avec succès.\n Vous pouvez maintenant vous connecter sur notre application pour pouvoir gerer les membres de votre room. Merci . '
+            send_mail(object, message, settings.DEFAULT_FROM_EMAIL, [room.roomTitulor.email])
             room.save()
         
         return redirect('room_list')
